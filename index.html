@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket & Truecaller</title>
+  </head>
+  <body>
+    Client
+    <button onclick="sendMessage()">Verify</button>
+  </body>
+  <script>
+    // Create WebSocket connection.
+    const socket = new WebSocket("ws://localhost:3000");
+
+    // Connection opened
+    socket.addEventListener("open", function (event) {
+      console.log("Connected to WS Server");
+    });
+
+    const sendMessage = () => {
+      window.open(
+        "truecallersdk://truesdk/web_verify?type=btmsheet&requestNonce=generateUUID()&partnerKey=6PKOH27d3115c45d042c49850da0b36b1dd71&partnerName=MamaEarth_Website&lang=en&loginPrefix=continue&loginSuffix=verifymobile&ctaPrefix=continuewith&ctaColor=%23f75d34&ctaTextColor=%23f75d34&btnShape=rect&skipOption=useanothernum"
+      );
+    };
+
+    function generateUUID() {
+      // Public Domain/MIT
+      var d = new Date().getTime(); //Timestamp
+      var d2 =
+        (performance && performance.now && performance.now() * 1000) || 0; //Time in microseconds since page-load or 0 if unsupported
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (
+        c
+      ) {
+        var r = Math.random() * 16; //random number between 0 and 16
+        if (d > 0) {
+          //Use timestamp until depleted
+          r = (d + r) % 16 | 0;
+          d = Math.floor(d / 16);
+        } else {
+          //Use microseconds since page-load if supported
+          r = (d2 + r) % 16 | 0;
+          d2 = Math.floor(d2 / 16);
+        }
+        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+      });
+    }
+
+    // console.log(generateUUID());
+  </script>
+</html>
